@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Update</title>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
     <link rel="stylesheet" href="{% static 'css/main.css'%}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
     <style>
@@ -26,6 +27,48 @@
             font-family: "Droid Serif";
         }
 
+          label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button.edit {
+            width: 100%;
+            padding: 10px;
+            background-color: #c30715;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button.edit:hover {
+            background-color: #f21122;
+        }
+
+        button.edit:active {
+            background-color: #004085;
+        }
+
     </style>
 </head>
 <body>
@@ -40,12 +83,12 @@
         <input type="text" name="name" id="name" value="{{person.name}}">
 
          <label for="course">Course:</label>
-        <input type="text" name="course" id="course" value="{{person.course}}" >
+            <input type="text" name="course" id="course" value="{{person.course}}" >
 
          <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{person.email}}"><br><br>
-
-        <input type="submit"  value="edit" class="btn btn-danger">
+         <input type="email" name="email" id="email" value="{{person.email}}" class="mg-3">
+            <label for=""></label>
+         <button type="submit" class="edit">Edit</button>
     </form>
     </div>
 </body>
