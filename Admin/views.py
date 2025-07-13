@@ -21,7 +21,7 @@ def add_student(request):
             course = course,
             email = email
         )
-
+        return redirect('Admin')
     return render(request, 'add_student.html')
 def edit(request,id):
     person = get_object_or_404(Info,id=id)
