@@ -7,10 +7,15 @@ from Admin.models import Info
 
 
 # Create your views here.
+@login_required()
 def admin(request):
-    people=Info.objects.all()
-    return render(request,'admin.html',{'people':people})
+    people = Info.objects.all()
 
+    if not request.user.is_staff:
+        return render(request, 'error.html')
+
+    return render(request,'admin.html',{'people':people})
+@login_required(login_url='login')
 def add_student(request):
 
     if request.method == "POST":
@@ -25,6 +30,7 @@ def add_student(request):
         )
         return redirect('Admin')
     return render(request, 'add_student.html')
+@login_required(login_url='login')
 def edit(request,id):
     person = get_object_or_404(Info,id=id)
     if request.method == "POST":
@@ -34,6 +40,7 @@ def edit(request,id):
         person.save()
         return redirect('Admin')
     return render(request, 'edit.html' ,{'person':person})
+@login_required(login_url='login')
 def delete(request,id):
     person = get_object_or_404(Info,id=id)
     try:
@@ -55,4 +62,10 @@ def login_view(request):
             return render(request, 'login.html')
     return render(request,'login.html')
 
+from django.contrib.auth import logout
+
+def logout_view(request):
+
+    logout(request)
+    return redirect('login')
 
