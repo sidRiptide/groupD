@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 from Admin.models import Info
@@ -40,3 +42,17 @@ def delete(request,id):
     except Exception as e:
         messages.error(request,"Person has not been deleted ")
     return redirect('Admin')
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('Admin')
+        else:
+            return render(request, 'login.html')
+    return render(request,'login.html')
+
+
