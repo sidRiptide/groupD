@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import logout
 
 from Admin.models import Info
 
@@ -10,12 +11,10 @@ from Admin.models import Info
 @login_required()
 def admin(request):
     people = Info.objects.all()
-
-    if not request.user.is_staff:
-        return render(request, 'error.html')
-
     return render(request,'admin.html',{'people':people})
-@login_required(login_url='login')
+
+
+@login_required()
 def add_student(request):
 
     if request.method == "POST":
@@ -30,7 +29,9 @@ def add_student(request):
         )
         return redirect('Admin')
     return render(request, 'add_student.html')
-@login_required(login_url='login')
+
+
+@login_required()
 def edit(request,id):
     person = get_object_or_404(Info,id=id)
     if request.method == "POST":
@@ -40,7 +41,9 @@ def edit(request,id):
         person.save()
         return redirect('Admin')
     return render(request, 'edit.html' ,{'person':person})
-@login_required(login_url='login')
+
+
+@login_required()
 def delete(request,id):
     person = get_object_or_404(Info,id=id)
     try:
@@ -62,7 +65,6 @@ def login_view(request):
             return render(request, 'login.html')
     return render(request,'login.html')
 
-from django.contrib.auth import logout
 
 def logout_view(request):
 
